@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Products - Task 1 JSON</title>
+    <style type="text/css">
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+        }
+        pre {
+            background: #f0f0f0;
+            padding: 10px;
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <h1>Product List (JSON as string)</h1>
+    <pre><script>
+        var productsJSON = [
+            {"name": "Jellycat Plush Bunny Toy", "description": "This is a really soft plush bunny made by Jellycat. It's high quality and super cute, so it works well as a gift for kids or even for people who collect plush toys.", "price": 32, "categories": ["toys", "plush", "kids"]},
+            {"name": "Brita Water Filter Pitcher", "description": "A Brita water filter pitcher that helps make tap water taste better by reducing chlorine and odors. It's useful for everyday drinking water at home.", "price": 25, "categories": ["kitchen", "home", "filter"]},
+            {"name": "Flower Bouquet", "description": "A fresh mixed flower bouquet with seasonal flowers. It's arranged nicely and works well for gifts, decorations, or special occasions.", "price": 45, "categories": ["flowers", "gift", "home"]},
+            {"name": "Wooden Cutting Board", "description": "A solid wooden cutting board made from durable hardwood. It's sturdy for everyday cooking and also gentle on knife blades.", "price": 38, "categories": ["kitchen", "home", "cooking"]},
+            {"name": "Soy Sauce Bottle", "description": "A 10 oz bottle of soy sauce with a rich flavor. It's good for cooking, dipping, or adding extra taste to different dishes.", "price": 6, "categories": ["food", "kitchen", "condiments"]},
+            {"name": "Dragon Playing Card Deck", "description": "A playing card deck with a dragon-themed design. The cards have a nice finish and are good for card games or collecting.", "price": 15, "categories": ["games", "collectibles", "entertainment"]},
+            {"name": "Electric Nail Drill", "description": "A cordless electric nail drill that can be used for filing and shaping nails. It has adjustable speeds, so it's useful for doing manicures at home.", "price": 28, "categories": ["beauty", "tools", "personal care"]},
+            {"name": "Violin", "description": "A beginner violin that comes with a bow and a case. It's designed for students who are learning how to play.", "price": 199, "categories": ["music", "instruments", "education"]},
+            {"name": "Soccer Ball", "description": "A size 5 soccer ball that follows the standard size used in official games. It's durable and works for both indoor and outdoor play.", "price": 22, "categories": ["sports", "outdoor", "fitness"]},
+            {"name": "Jump Rope", "description": "A lightweight jump rope with adjustable length. It's good for cardio workouts and general fitness training.", "price": 12, "categories": ["sports", "fitness", "outdoor"]}
+        ];
+        var jsonString = JSON.stringify(productsJSON, null, 2);
+        document.write(jsonString);
+    </script></pre>
+</body>
+</html>

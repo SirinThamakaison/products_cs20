@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Products - Task 3 Load JSON</title>
+    <style type="text/css">
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+        }
+        .product-card {
+            border: 1px solid #000;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        #result {
+            margin-top: 15px;
+        }
+        button {
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Product List</h1>
+    <button id="loadBtn">Load Products</button>
+    <div id="result"></div>
+
+    <script>
+        function loadProducts() {
+            fetch("products.json")
+            .then(function(res) { return res.text(); })
+            .then(function(data) {
+                var obj = JSON.parse(data);
+                var html = "";
+                var i;
+                for (i = 0; i < obj.length; i++) {
+                    html += "<div class=\"product-card\">";
+                    html += "<h3>" + obj[i].name + "</h3>";
+                    html += "<div>" + obj[i].description + "</div>";
+                    html += "<div>Price: $" + obj[i].price + "</div>";
+                    html += "<div>Categories: " + obj[i].categories.join(", ") + "</div>";
+                    html += "</div>";
+                }
+                document.getElementById("result").innerHTML = html;
+            })
+            .catch(function(error) {
+                document.getElementById("result").innerHTML = "Could not load products.";
+            });
+        }
+        document.getElementById("loadBtn").onclick = loadProducts;
+    </script>
+</body>
+</html>

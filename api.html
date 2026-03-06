@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Assignment 6 - API</title>
+    <style type="text/css">
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+        }
+        input[type="text"] {
+            padding: 5px;
+            width: 200px;
+        }
+        button {
+            padding: 5px 10px;
+            margin-left: 5px;
+        }
+        #apiResult {
+            margin-top: 15px;
+            border: 1px solid #000;
+            padding: 10px;
+        }
+        .result-item {
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #000;
+        }
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        .result-item .desc {
+            color: #555;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+        .info-section {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #000;
+        }
+        .info-section h2 {
+            font-size: 16px;
+        }
+        .info-section p {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Google Search Results (Zenserp API)</h1>
+    <p>Enter a search term and click Get Results to see what Google returns.</p>
+    <input type="text" id="searchBox" value="Pied Piper">
+    <button type="button" id="goBtn">Get Results</button>
+    <div id="apiResult">&nbsp;</div>
+
+    <div class="info-section">
+        <h2>About this API</h2>
+        <p>API: Zenserp - Google Search API. It lets you get Google search results in JSON so you can use them in a project.</p>
+        <p>Why I picked it: I wanted to try an API that takes a parameter (the search query) and returns real data. Zenserp has a free plan and the docs were easy to follow.</p>
+        <p>Where I found it: <a href="https://app.zenserp.com/">https://app.zenserp.com/</a> (dashboard and documentation).</p>
+        <p>Parameters I used: In the query string I use <code>q=</code> for the search term (e.g. <code>?q=Pied%20Piper</code>). You have to send the request with a header <code>apikey</code> so the API knows it's you. So the options/parameters are: (1) query string <code>q</code> = the search words, (2) header <code>apikey</code> = my API key.</p>
+        <p>Example use: A small tool that checks what ranks on Google for a keyword, or a page that shows "what people are searching" for a topic. You could also use it to compare how different search terms show up in results.</p>
+    </div>
+
+    <script>
+        function loadData() {
+            var theWord = document.getElementById("searchBox").value;
+            if (theWord === "") {
+                document.getElementById("apiResult").innerHTML = "Enter a search term.";
+                return;
+            }
+            var theURL = "https://app.zenserp.com/api/v2/search?q=" + encodeURIComponent(theWord);
+            document.getElementById("apiResult").innerHTML = "Loading...";
+
+            fetch(theURL, {
+                method: "GET",
+                headers: { "apikey": "6747c120-1903-11f1-ad01-815ff48c8d0e" }
+            })
+            .then(function(res) { return res.text(); })
+            .then(function(data) {
+                var resp = JSON.parse(data);
+                var html = "";
+                var results = resp.organic || [];
+                if (results.length === 0) {
+                    html = "<p>No organic results returned. Try another search or check the API.</p>";
+                } else {
+                    var i;
+                    for (i = 0; i < results.length; i++) {
+                        var r = results[i];
+                        var title = r.title || "(no title)";
+                        var link = r.link || r.url || "#";
+                        var desc = r.description || "";
+                        html += '<div class="result-item">';
+                        html += '<a href="' + link + '" target="_blank">' + title + '</a>';
+                        html += '<div class="desc">' + desc + '</div>';
+                        html += '</div>';
+                    }
+                }
+                document.getElementById("apiResult").innerHTML = html;
+            })
+            .catch(function(error) {
+                document.getElementById("apiResult").innerHTML = "Request failed: " + error;
+            });
+        }
+
+        document.getElementById("goBtn").onclick = loadData;
+    </script>
+</body>
+</html>
