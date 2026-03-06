@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Assignment 6 - API</title>
+    <title>Assignment 6 API</title>
     <style type="text/css">
         body {
             font-family: sans-serif;
@@ -50,16 +50,16 @@
 <body>
     <h1>Google Search Results (Zenserp API)</h1>
     <p>Enter a search term and click Get Results to see what Google returns.</p>
-    <input type="text" id="searchBox" value="Pied Piper">
+    <input type="text" id="searchBox" value="javascript tutorial">
     <button type="button" id="goBtn">Get Results</button>
     <div id="apiResult">&nbsp;</div>
 
     <div class="info-section">
         <h2>About this API</h2>
-        <p>API: Zenserp - Google Search API. It lets you get Google search results in JSON so you can use them in a project.</p>
+        <p>API: Zenserp Google Search API. It lets you get Google search results in JSON so you can use them in a project.</p>
         <p>Why I picked it: I wanted to try an API that takes a parameter (the search query) and returns real data. Zenserp has a free plan and the docs were easy to follow.</p>
         <p>Where I found it: <a href="https://app.zenserp.com/">https://app.zenserp.com/</a> (dashboard and documentation).</p>
-        <p>Parameters I used: In the query string I use <code>q=</code> for the search term (e.g. <code>?q=Pied%20Piper</code>). You have to send the request with a header <code>apikey</code> so the API knows it's you. So the options/parameters are: (1) query string <code>q</code> = the search words, (2) header <code>apikey</code> = my API key.</p>
+        <p>Parameters I used: In the query string I use q= for the search term (e.g. ?q=javascript%20tutorial) and apikey= for my API key. So the options/parameters are: (1) q = the search words, (2) apikey = my API key. Both go in the URL.</p>
         <p>Example use: A small tool that checks what ranks on Google for a keyword, or a page that shows "what people are searching" for a topic. You could also use it to compare how different search terms show up in results.</p>
     </div>
 
@@ -70,13 +70,10 @@
                 document.getElementById("apiResult").innerHTML = "Enter a search term.";
                 return;
             }
-            var theURL = "https://app.zenserp.com/api/v2/search?q=" + encodeURIComponent(theWord);
+            var theURL = "https://app.zenserp.com/api/v2/search?q=" + encodeURIComponent(theWord) + "&apikey=6747c120-1903-11f1-ad01-815ff48c8d0e";
             document.getElementById("apiResult").innerHTML = "Loading...";
 
-            fetch(theURL, {
-                method: "GET",
-                headers: { "apikey": "6747c120-1903-11f1-ad01-815ff48c8d0e" }
-            })
+            fetch(theURL)
             .then(function(res) { return res.text(); })
             .then(function(data) {
                 var resp = JSON.parse(data);
